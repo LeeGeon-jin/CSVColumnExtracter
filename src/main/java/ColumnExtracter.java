@@ -2,6 +2,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class ColumnExtracter
         String outputFileName="new_"+fileName;
 
         extractAndWrite(fileName,outputFileName);
-
+        deleteFile(fileName);
     }
 
     private static void extractAndWrite(String inputFileName, String outputFileName) throws IOException, CsvValidationException {
@@ -58,5 +59,18 @@ public class ColumnExtracter
     {
         DateTimeFormatter formatter=DateTimeFormatter.BASIC_ISO_DATE;
         return LocalDate.now().format(formatter);
+    }
+
+    private static void deleteFile(String filePath)
+    {
+        File file=new File(filePath);
+        if(file.delete())
+        {
+            System.out.println("Successful!");
+        }
+        else
+        {
+            System.out.println("The original file deleted failed!");
+        }
     }
 }
